@@ -1,0 +1,23 @@
+dev:
+  environment: dev
+  zone: us-central1
+  location: central
+  projectid: abc-123
+
+staging:
+  environment: staging
+  zone: us-central1
+  location: central
+  projectid: abc-123
+
+prod-east:
+  environment: prod
+  zone: us-east1
+  location: east
+  projectid: abc-123
+
+prod-central:
+  environment: prod
+  zone: us-central1
+  location: central
+  projectid: abc-123

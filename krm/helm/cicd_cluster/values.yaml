@@ -1,0 +1,4 @@
+environment: dev
+zone: us-central1
+location: central
+projectid: abc-123

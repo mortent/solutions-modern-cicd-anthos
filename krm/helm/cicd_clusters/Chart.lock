@@ -1,0 +1,15 @@
+dependencies:
+- name: cicd_cluster
+  repository: file://../cicd_cluster
+  version: 0.1.0
+- name: cicd_cluster
+  repository: file://../cicd_cluster
+  version: 0.1.0
+- name: cicd_cluster
+  repository: file://../cicd_cluster
+  version: 0.1.0
+- name: cicd_cluster
+  repository: file://../cicd_cluster
+  version: 0.1.0
+digest: sha256:fd41f7e37ab58ce5a02dbf5ce67c0e489d5b3eb748b05be59620c03961722135
+generated: "2020-07-23T11:25:26.805347-07:00"

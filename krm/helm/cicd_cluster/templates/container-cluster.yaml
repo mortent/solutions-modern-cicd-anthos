@@ -1,0 +1,23 @@
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata:
+  name: {{ .Values.environment }}-{{ .Values.zone }}
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    cnrm.cloud.google.com/remove-default-node-pool: "true" # don't create the default node pool
+spec:
+  initialNodeCount: 1 # this field must be set to greater than 0
+  enableBinaryAuthorization: true
+  ipAllocationPolicy:
+    clusterSecondaryRangeName: anthos-platform-pods-{{ .Values.environment }}
+    servicesSecondaryRangeName: anthos-platform-services-{{ .Values.environment }}
+  location: {{ .Values.zone }}
+  networkPolicy:
+    enabled: true
+    provider: CALICO
+  networkRef:
+    name: anthos-platform
+  subnetworkRef:
+    name: anthos-platform-{{ .Values.location}}
+  workloadIdentityConfig:
+    identityNamespace: {{ .Values.projectid }}.svc.id.goog

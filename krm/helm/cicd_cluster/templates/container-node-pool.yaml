@@ -1,0 +1,26 @@
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerNodePool
+metadata:
+  name: wi-pool-{{ .Values.environment }}-{{ .Values.zone }} # ContainerNodePool name must be unique in a namespace (a GCP project)
+  namespace: {{ .Release.Namespace }}
+spec:
+  autoscaling:
+    maxNodeCount: 3
+    minNodeCount: 1
+  clusterRef:
+    name: {{ .Values.environment }}-{{ .Values.zone }}
+  initialNodeCount: 1
+  location: {{ .Values.zone }}
+  nodeConfig:
+    labels:
+      cluster_name: {{ .Values.environment }}-{{ .Values.zone }}
+      node_pool: wi-pool-{{ .Values.environment }}-{{ .Values.zone }}
+    machineType: n1-standard-2
+    metadata:
+      cluster_name: {{ .Values.environment }}-{{ .Values.zone }}
+      node_pool: wi-pool-{{ .Values.environment }}-{{ .Values.zone }}
+    serviceAccountRef:
+      name: tf-sa-{{ .Values.environment }}-{{ .Values.zone }}
+    tags:
+    - gke-{{ .Values.environment }}-{{ .Values.zone }}
+    - gke-{{ .Values.environment }}-{{ .Values.zone }}-wi-pool
