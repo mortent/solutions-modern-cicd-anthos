@@ -1,0 +1,26 @@
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerNodePool
+metadata:
+  name: wi-pool-dev-us-central1 # {"$kpt-set":"node-pool-name"}
+  namespace: YOUR_NAMESPACE # {"$kpt-set":"namespace"}
+spec:
+  autoscaling:
+    maxNodeCount: 3
+    minNodeCount: 1
+  clusterRef:
+    name: dev-us-central1 # {"$kpt-set":"cluster-name"}
+  initialNodeCount: 1
+  location: us-central1 # {"$kpt-set":"zone"}
+  nodeConfig:
+    labels:
+      cluster_name: dev-us-central1 # {"$kpt-set":"cluster-name"}
+      node_pool: wi-pool-dev-us-central1 # {"$kpt-set":"node-pool-name"}
+    machineType: n1-standard-2
+    metadata:
+      cluster_name: dev-us-central1 # {"$kpt-set":"cluster-name"}
+      node_pool: wi-pool-dev-us-central1 # {"$kpt-set":"node-pool-name"}
+    serviceAccountRef:
+      name: tf-sa-dev-us-central1 # {"$kpt-set":"service-account-name"}
+    tags:
+    - gke-dev-us-central1 # {"$kpt-set":"node-pool-cluster-tag"}
+    - gke-dev-us-central1-wi-pool # {"$kpt-set":"node-pool-tag"}

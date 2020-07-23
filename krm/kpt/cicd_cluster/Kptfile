@@ -1,0 +1,125 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: cicd_cluster
+packageMetadata:
+  shortDescription: sample description
+openAPI:
+  definitions:
+    io.k8s.cli.setters.project-id:
+      x-k8s-cli:
+        setter:
+          name: project-id
+          value: YOUR_PROJECT
+    io.k8s.cli.setters.environment:
+      x-k8s-cli:
+        setter:
+          name: environment
+          value: dev
+    io.k8s.cli.setters.zone:
+      x-k8s-cli:
+        setter:
+          name: zone
+          value: us-central1
+    io.k8s.cli.setters.location:
+      x-k8s-cli:
+        setter:
+          name: location
+          value: central
+    io.k8s.cli.substitutions.identity-namespace:
+      x-k8s-cli:
+        substitution:
+          name: identity-namespace
+          pattern: ${project-id}.svc.id.goog
+          values:
+          - marker: ${project-id}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+    io.k8s.cli.setters.namespace:
+      x-k8s-cli:
+        setter:
+          name: namespace
+          value: YOUR_NAMESPACE
+    io.k8s.cli.substitutions.env-and-zone:
+      x-k8s-cli:
+        substitution:
+          name: env-and-zone
+          pattern: ${environment}-${zone}
+          values:
+          - marker: ${environment}
+            ref: '#/definitions/io.k8s.cli.setters.environment'
+          - marker: ${zone}
+            ref: '#/definitions/io.k8s.cli.setters.zone'
+    io.k8s.cli.substitutions.cluster-name:
+      x-k8s-cli:
+        substitution:
+          name: cluster-name
+          pattern: ${environment}-${zone}
+          values:
+          - marker: ${environment}
+            ref: '#/definitions/io.k8s.cli.setters.environment'
+          - marker: ${zone}
+            ref: '#/definitions/io.k8s.cli.setters.zone'
+    io.k8s.cli.substitutions.node-pool-name:
+      x-k8s-cli:
+        substitution:
+          name: node-pool-name
+          pattern: wi-pool-${cluster-name}
+          values:
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.substitutions.cluster-name'
+    io.k8s.cli.substitutions.service-account-name:
+      x-k8s-cli:
+        substitution:
+          name: service-account-name
+          pattern: tf-sa-${cluster-name}
+          values:
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.substitutions.cluster-name'
+    io.k8s.cli.substitutions.service-account-display-name:
+      x-k8s-cli:
+        substitution:
+          name: service-account-display-name
+          pattern: Cluster Service Account for ${cluster-name}
+          values:
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.substitutions.cluster-name'
+    io.k8s.cli.substitutions.node-pool-cluster-tag:
+      x-k8s-cli:
+        substitution:
+          name: node-pool-cluster-tag
+          pattern: gke-${cluster-name}
+          values:
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.substitutions.cluster-name'
+    io.k8s.cli.substitutions.node-pool-tag:
+      x-k8s-cli:
+        substitution:
+          name: node-pool-tag
+          pattern: gke-${cluster-name}-wi-pool
+          values:
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.substitutions.cluster-name'
+    io.k8s.cli.substitutions.subnetwork-name:
+      x-k8s-cli:
+        substitution:
+          name: subnetwork-name
+          pattern: anthos-platform-${location}
+          values:
+          - marker: ${location}
+            ref: '#/definitions/io.k8s.cli.setters.location'
+    io.k8s.cli.substitutions.cluster-secondary-range-name:
+      x-k8s-cli:
+        substitution:
+          name: cluster-secondary-range-name
+          pattern: anthos-platform-pods-${environment}
+          values:
+          - marker: ${environment}
+            ref: '#/definitions/io.k8s.cli.setters.environment'
+    io.k8s.cli.substitutions.services-secondary-range-name:
+      x-k8s-cli:
+        substitution:
+          name: services-secondary-range-name
+          pattern: anthos-platform-services-${environment}
+          values:
+          - marker: ${environment}
+            ref: '#/definitions/io.k8s.cli.setters.environment'

@@ -1,0 +1,23 @@
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata:
+  name: dev-us-central1 # {"$kpt-set":"cluster-name"}
+  namespace: YOUR_NAMESPACE # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/remove-default-node-pool: "true"
+spec:
+  initialNodeCount: 1
+  enableBinaryAuthorization: true
+  ipAllocationPolicy:
+    clusterSecondaryRangeName: anthos-platform-pods-dev # {"$kpt-set":"cluster-secondary-range-name"}
+    servicesSecondaryRangeName: anthos-platform-services-dev # {"$kpt-set":"services-secondary-range-name"}
+  location: us-central1 # {"$kpt-set":"zone"}
+  networkPolicy:
+    enabled: true
+    provider: CALICO
+  networkRef:
+    name: anthos-platform
+  subnetworkRef:
+    name: anthos-platform-central # {"$kpt-set":"subnetwork-name"}
+  workloadIdentityConfig:
+    identityNamespace: YOUR_PROJECT.svc.id.goog # {"$kpt-set":"identity-namespace"}
