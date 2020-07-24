@@ -1,0 +1,12 @@
+apiVersion: config.k8s.io
+kind: LocalPackage
+metadata:
+  name: dev-cluster
+spec:
+  path: ./cicd_cluster
+  setters:
+    environment: dev
+    location: central
+    namespace: my-dev-namespace
+    project-id: my-project-id
+    zone: us-central1

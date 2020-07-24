@@ -1,0 +1,12 @@
+apiVersion: config.k8s.io
+kind: LocalPackage
+metadata:
+  name: staging-cluster
+spec:
+  path: ./cicd_cluster
+  setters:
+    environment: staging
+    location: central
+    namespace: my-staging-namespace
+    project-id: my-project-id
+    zone: us-central1
